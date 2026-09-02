@@ -1,0 +1,25 @@
+name: Deploy Workshop
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - run: npm run ladle:build
+
+      - name: Deploy to Netlify
+        run: npx netlify-cli deploy --prod --dir=build --site="$NETLIFY_SITE_ID" --auth="$NETLIFY_AUTH_TOKEN"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
