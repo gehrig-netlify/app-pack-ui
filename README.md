@@ -96,7 +96,7 @@ Nothing vertical-specific (no HR/Finance business logic) belongs here. If you're
 | `EmptyState`, `Skeleton`, `NotFoundState`, `AppErrorBoundary` | Shared states: empty, loading, 404, and error-boundary fallback. |
 | `ThemeProvider`, `useTheme` | Light/dark/system theme toggling via CSS custom properties. Framework-agnostic (no Next.js dependency). |
 | `ProtectedRoute` | Generic, auth-provider-agnostic and routing-library-agnostic auth gate. It never redirects itself — it conditionally renders and calls `onUnauthenticated()`, leaving actual navigation to your app's router glue. |
-| `Button`, `ButtonGroup` | Primary/outline button styles, sizes (`sm`/`md`/`icon`), and a joined-border group wrapper. |
+| `Button`, `ButtonGroup` | Variants `primary`/`secondary`/`destructive`/`outline`/`ghost`/`link`; sizes `sm`/`md`/`icon`/`icon-sm` (icon sizes are square, matching the rest of the family, not circular); `asChild` (via Radix `Slot`) to wrap a router `Link` or another primitive's trigger element instead of rendering a `<button>`; and a joined-border `ButtonGroup` wrapper. |
 | `Badge` | Status/label pill — `default`/`secondary`/`destructive`/`outline` variants. |
 | `Avatar`, `AvatarGroup` | User avatar with image-load fallback and presence dot; `AvatarGroup` stacks avatars with a "+N" overflow. |
 | `Input` | Text input with optional leading/trailing icon slots. |

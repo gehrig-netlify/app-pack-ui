@@ -8,11 +8,11 @@ export default {
 
 const variantArgTypes = {
   variant: {
-    options: ["primary", "outline"],
+    options: ["primary", "secondary", "destructive", "outline", "ghost", "link"],
     control: { type: "select" as const },
   },
   size: {
-    options: ["sm", "md", "icon"],
+    options: ["sm", "md", "icon", "icon-sm"],
     control: { type: "select" as const },
   },
 };
@@ -33,6 +33,44 @@ Outline.args = {
 };
 Outline.argTypes = variantArgTypes;
 
+export const Secondary: Story<ButtonProps> = (args) => <Button {...args} />;
+Secondary.args = {
+  variant: "secondary",
+  size: "md",
+  children: "Button",
+};
+Secondary.argTypes = variantArgTypes;
+
+export const Destructive: Story<ButtonProps> = (args) => <Button {...args} />;
+Destructive.args = {
+  variant: "destructive",
+  size: "md",
+  children: "Delete",
+};
+Destructive.argTypes = variantArgTypes;
+
+export const Ghost: Story<ButtonProps> = (args) => <Button {...args} />;
+Ghost.args = {
+  variant: "ghost",
+  size: "md",
+  children: "Button",
+};
+Ghost.argTypes = variantArgTypes;
+
+export const Link: Story<ButtonProps> = (args) => <Button {...args} />;
+Link.args = {
+  variant: "link",
+  size: "md",
+  children: "Button",
+};
+Link.argTypes = variantArgTypes;
+
+export const AsChild: Story = () => (
+  <Button asChild variant="outline" size="md">
+    <a href="#">I render as an &lt;a&gt;, not a &lt;button&gt;</a>
+  </Button>
+);
+
 export const Small: Story<ButtonProps> = (args) => <Button {...args} />;
 Small.args = {
   variant: "outline",
@@ -50,6 +88,15 @@ IconOnly.args = {
 };
 IconOnly.argTypes = variantArgTypes;
 
+export const IconSmall: Story<ButtonProps> = (args) => <Button {...args} />;
+IconSmall.args = {
+  variant: "ghost",
+  size: "icon-sm",
+  "aria-label": "Close",
+  children: <ArrowUp />,
+};
+IconSmall.argTypes = variantArgTypes;
+
 export const Disabled: Story<ButtonProps> = (args) => <Button {...args} />;
 Disabled.args = {
   variant: "primary",
@@ -59,36 +106,29 @@ Disabled.args = {
 };
 Disabled.argTypes = variantArgTypes;
 
+const VARIANTS = ["primary", "secondary", "destructive", "outline", "ghost", "link"] as const;
+
 export const AllStates: Story = () => (
   <div className="flex flex-col gap-6">
-    <div className="flex flex-col gap-2">
-      <p className="text-sm font-medium text-muted-foreground">Primary</p>
-      <div className="flex items-center gap-3">
-        <Button variant="primary" size="sm">
-          Button
-        </Button>
-        <Button variant="primary" size="md">
-          Button
-        </Button>
-        <Button variant="primary" size="icon" aria-label="Scroll up">
-          <ArrowUp />
-        </Button>
+    {VARIANTS.map((variant) => (
+      <div key={variant} className="flex flex-col gap-2">
+        <p className="text-sm font-medium capitalize text-muted-foreground">{variant}</p>
+        <div className="flex items-center gap-3">
+          <Button variant={variant} size="sm">
+            Button
+          </Button>
+          <Button variant={variant} size="md">
+            Button
+          </Button>
+          <Button variant={variant} size="icon" aria-label="Scroll up">
+            <ArrowUp />
+          </Button>
+          <Button variant={variant} size="icon-sm" aria-label="Scroll up">
+            <ArrowUp />
+          </Button>
+        </div>
       </div>
-    </div>
-    <div className="flex flex-col gap-2">
-      <p className="text-sm font-medium text-muted-foreground">Outline</p>
-      <div className="flex items-center gap-3">
-        <Button variant="outline" size="sm">
-          Button
-        </Button>
-        <Button variant="outline" size="md">
-          Button
-        </Button>
-        <Button variant="outline" size="icon" aria-label="Scroll up">
-          <ArrowUp />
-        </Button>
-      </div>
-    </div>
+    ))}
     <div className="flex flex-col gap-2">
       <p className="text-sm font-medium text-muted-foreground">Disabled</p>
       <div className="flex items-center gap-3">
@@ -102,6 +142,14 @@ export const AllStates: Story = () => (
           <ArrowUp />
         </Button>
       </div>
+    </div>
+    <div className="flex flex-col gap-2">
+      <p className="text-sm font-medium text-muted-foreground">
+        asChild (renders an &lt;a&gt;, not a &lt;button&gt;)
+      </p>
+      <Button asChild variant="outline" size="md">
+        <a href="#">Link-styled-as-Button</a>
+      </Button>
     </div>
   </div>
 );
