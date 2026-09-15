@@ -1,0 +1,12 @@
+<style>
+  /* Move the story navigation panel to the left. Ladle renders <main> then
+     <nav> in DOM order and lays them out with flex-direction: row at
+     desktop widths; reversing that also makes Ladle self-detect
+     `data-reversed` (see @ladle/react's sidebar/main.tsx), which flips the
+     resize-handle and padding sides to match automatically. */
+  @media (min-width: 768px) {
+    .ladle-wrapper {
+      flex-direction: row-reverse;
+    }
+  }
+</style>

@@ -26,6 +26,7 @@
     "build:js": "tsup",
     "build:css": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --minify",
     "build": "npm run build:js && npm run build:css",
+    "prepare": "npm run build",
     "dev": "concurrently \"tsup --watch\" \"tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch\"",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
@@ -42,6 +43,7 @@
     "@tanstack/react-table": "9.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lucide-react": "^1.46.0",
     "radix-ui": "^1.6.7",
     "react-error-boundary": "^6.1.4",
     "react-hook-form": "^7.87.0",
@@ -50,6 +52,7 @@
   "devDependencies": {
     "@ladle/react": "^5.1.1",
     "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "concurrently": "^10.0.5",

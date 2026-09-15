@@ -25,3 +25,26 @@ export const CardSkeleton: Story = () => (
     <Skeleton className="h-4 w-2/3" />
   </div>
 );
+
+/** A few representative shapes/sizes side by side: a text line, an avatar circle, and a card block. */
+export const AllStates: Story = () => (
+  <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-2">
+      <p className="text-sm font-medium text-muted-foreground">Text line</p>
+      <Skeleton className="h-4 w-64" />
+    </div>
+    <div className="flex flex-col gap-2">
+      <p className="text-sm font-medium text-muted-foreground">Avatar</p>
+      <Skeleton className="h-12 w-12 rounded-full" />
+    </div>
+    <div className="flex flex-col gap-2">
+      <p className="text-sm font-medium text-muted-foreground">Card block</p>
+      <div className="flex flex-col gap-3 rounded-lg border border-border p-4">
+        <Skeleton className="h-6 w-1/3" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+        <Skeleton className="h-4 w-2/3" />
+      </div>
+    </div>
+  </div>
+);

@@ -38,7 +38,7 @@ export function DataTableToolbar<TData extends RowData>({
             onChange={(event) => searchColumn.setFilterValue(event.target.value)}
             placeholder={searchPlaceholder ?? "Search..."}
             aria-label={searchPlaceholder ?? "Search"}
-            className="h-9 w-full max-w-sm rounded-md border border-input bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="h-9 w-full max-w-sm rounded-lg border border-input bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
         ) : null}
       </div>
@@ -47,7 +47,7 @@ export function DataTableToolbar<TData extends RowData>({
           <DropdownMenu.Trigger asChild>
             <button
               type="button"
-              className="inline-flex h-9 items-center gap-1.5 rounded-md border border-input bg-background px-3 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-input bg-background px-3 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               View
               <ChevronDownIcon />

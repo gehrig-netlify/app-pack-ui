@@ -39,7 +39,7 @@ export function DataTablePagination<TData extends RowData>({
           <select
             value={pageSize}
             onChange={(event) => table.setPageSize(Number(event.target.value))}
-            className="h-8 rounded-md border border-input bg-background px-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="h-8 rounded-lg border border-input bg-background px-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             {pageSizeOptions.map((option) => (
               <option key={option} value={option}>
@@ -103,7 +103,7 @@ function PaginationButton({
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
-      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-input bg-background text-foreground hover:bg-muted disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-input bg-background text-foreground hover:bg-muted disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
     >
       {children}
     </button>

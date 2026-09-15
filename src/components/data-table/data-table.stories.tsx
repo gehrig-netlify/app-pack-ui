@@ -154,3 +154,31 @@ export const Empty: Story = () => (
 export const Loading: Story = () => (
   <DataTable<Person, unknown> columns={columns} data={people} isLoading pageSize={5} />
 );
+
+/**
+ * Three representative configurations stacked on one page: a populated table, the loading
+ * skeleton state, and the empty-data fallback. Reuses the same mock `people`/`columns` as the
+ * other stories.
+ */
+export const AllStates: Story = () => (
+  <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-3">
+      <p className="text-sm font-medium text-muted-foreground">Populated</p>
+      <DataTable<Person, unknown>
+        columns={columns}
+        data={people}
+        searchableColumnId="name"
+        pageSize={5}
+        getRowId={(row) => row.id}
+      />
+    </div>
+    <div className="flex flex-col gap-3">
+      <p className="text-sm font-medium text-muted-foreground">Loading</p>
+      <DataTable<Person, unknown> columns={columns} data={people} isLoading pageSize={5} />
+    </div>
+    <div className="flex flex-col gap-3">
+      <p className="text-sm font-medium text-muted-foreground">Empty</p>
+      <DataTable<Person, unknown> columns={columns} data={[]} searchableColumnId="name" />
+    </div>
+  </div>
+);

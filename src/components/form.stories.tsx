@@ -1,4 +1,5 @@
 import type { Story } from "@ladle/react";
+import { useEffect, useRef } from "react";
 import { z } from "zod";
 
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, useFormStatus } from "./form";
@@ -151,3 +152,99 @@ Default.argTypes = {
     defaultValue: 600,
   },
 };
+
+/**
+ * Silently clicks a hidden submit button on mount, driving a `<Form>` instance through a real
+ * submission so its `useFormStatus()` lands in (and stays in) a particular lifecycle state -
+ * rather than faking the visuals, this exercises the actual state machine.
+ */
+function AutoSubmitTrigger() {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    buttonRef.current?.click();
+  }, []);
+
+  return <button ref={buttonRef} type="submit" className="hidden" aria-hidden="true" tabIndex={-1} />;
+}
+
+interface LifecycleFormProps {
+  label: string;
+  delayMs: number;
+  simulateFailure: boolean;
+  autoSubmit: boolean;
+}
+
+/** One `<Form>` instance, captioned, optionally auto-submitted to reach a target `FormStatus`. */
+function LifecycleForm({ label, delayMs, simulateFailure, autoSubmit }: LifecycleFormProps) {
+  const handleSubmit = async () => {
+    await wait(delayMs);
+    if (simulateFailure) {
+      throw new Error("The server rejected this teammate (simulated failure).");
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      <p className="text-sm font-medium text-muted-foreground">{label}</p>
+      <Form
+        schema={teammateSchema}
+        defaultValues={{ name: "Ada Lovelace", email: "ada@netlify.com", role: "member" }}
+        onSubmit={handleSubmit}
+        className="max-w-sm"
+      >
+        <FormField<TeammateValues, "name">
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <input
+                  {...field}
+                  type="text"
+                  className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField<TeammateValues, "email">
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <input
+                  {...field}
+                  type="email"
+                  className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <SubmitBar />
+        {autoSubmit ? <AutoSubmitTrigger /> : null}
+      </Form>
+    </div>
+  );
+}
+
+/**
+ * The `idle -> submitting -> success -> error` lifecycle shown side by side. Each panel (besides
+ * "Idle") auto-submits on mount via a hidden button click so its `useFormStatus()` genuinely
+ * reaches that state, rather than faking the visuals: "Submitting" uses a very long delay so it
+ * settles there, "Success" and "Error" resolve/reject almost immediately.
+ */
+export const AllStates: Story = () => (
+  <div className="flex flex-col gap-6 sm:flex-row sm:flex-wrap">
+    <LifecycleForm label="Idle" delayMs={600} simulateFailure={false} autoSubmit={false} />
+    <LifecycleForm label="Submitting" delayMs={60_000} simulateFailure={false} autoSubmit />
+    <LifecycleForm label="Success" delayMs={50} simulateFailure={false} autoSubmit />
+    <LifecycleForm label="Error" delayMs={50} simulateFailure={true} autoSubmit />
+  </div>
+);
