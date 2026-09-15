@@ -17,7 +17,7 @@ npm install @netlify-labs/app-pack-ui@0.1.0
 This package hasn't been published to the npm registry yet (see [Versioning & release process](#versioning--release-process)). Until then, templates can install directly from GitHub:
 
 ```sh
-npm install github:gehrig-netlify/app-packs#<commit-sha>
+npm install github:gehrig-netlify/app-pack-ui#<commit-sha>
 ```
 
 **Pin a commit SHA, not a branch name** — a branch moves, a SHA doesn't, so this is the closest git-based equivalent to the exact-version pin above. `npm install` runs this package's `prepare` script on install (a plain `npm run build`), so consumers get a freshly built `dist/` without needing it committed to the repo.
